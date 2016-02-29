@@ -10,4 +10,5 @@
     mode=0644
     owner=root
     group=root
+  when: disable_postfix_relay is not defined or not disable_postfix_relay
   notify: restart postfix
