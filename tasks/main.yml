@@ -4,6 +4,11 @@
     name=postfix
     state=installed
 
+- name: Install SASL plain
+  yum:
+    name=cyrus-sasl-plain
+    state=installed
+
 - name: Install configuration files
   template: >
     src={{item}}.j2
