@@ -4,11 +4,26 @@
     name=postfix
     state=installed
 
-- template: >
-    src=main.cf.j2
-    dest=/etc/postfix/main.cf
+- name: Install configuration files
+  template: >
+    src={{item}}.j2
+    dest=/etc/postfix/{{item}}
     mode=0644
     owner=root
     group=root
   when: disable_postfix_relay is not defined or not disable_postfix_relay
   notify: restart postfix
+  with_items:
+    - main.cf
+    - header_checks
+    - sender_canonical_maps
+
+- name: Install sasl password
+  template: >
+    src=sasl_passwd.j2
+    dest=/etc/postfix/sasl_passwd
+    mode=0600
+    owner=root
+    group=root
+  when: disable_postfix_relay is not defined or not disable_postfix_relay
+  notify: compile sasl_passwd

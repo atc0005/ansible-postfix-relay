@@ -314,6 +314,14 @@ mynetworks = {{ ansible_default_ipv4.address }}, 127.0.0.1
 
 # use IP-adress to avoid dns-manipulation
 relayhost = {{ postfix_relay_host }}
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+
+# REWRITE SENDERS (mailjet)
+# Forcing sender address for mailjet
+sender_canonical_classes = envelope_sender, header_sender
+sender_canonical_maps =  regexp:/etc/postfix/sender_canonical_maps
 
 # REJECTING UNKNOWN RELAY USERS
 #

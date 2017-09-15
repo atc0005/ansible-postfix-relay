@@ -4,3 +4,6 @@
     name=postfix
     state=restarted
     enabled=yes
+
+- name: compile sasl_passwd
+  shell: postmap /etc/postfix/sasl_passwd
